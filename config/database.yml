@@ -1,0 +1,39 @@
+development:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: puntospelotas_development
+  pool:     5
+  username: puntospelotas
+  password:
+  template: template0
+
+staging:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: puntospelotas_staging
+  pool:     5
+  username: puntos-pelotas
+  password:
+  template: template0
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: puntospelotas_test
+  pool:     5
+  username: puntos-pelotas
+  password:
+  template: template0
+
+production:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: puntospelotas_production
+  pool:     5
+  username: puntospelotas
+  password:
+  template: template0
