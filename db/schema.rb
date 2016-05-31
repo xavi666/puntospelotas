@@ -11,19 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303003938) do
+ActiveRecord::Schema.define(version: 20160529215839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "games", force: :cascade do |t|
+    t.integer  "local_team_id"
+    t.integer  "visitant_team_id"
+    t.integer  "goals_local_team"
+    t.integer  "goals_visitant_team"
+    t.datetime "game_date"
+    t.string   "stage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "points",              default: false
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "team_id"
+    t.string   "position"
+    t.boolean  "active",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "short_name"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "provider",                            null: false
-    t.string   "uid",                    default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "provider",                              null: false
+    t.string   "uid",                    default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -39,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150303003938) do
     t.text     "tokens"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "push_comunio",           default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree

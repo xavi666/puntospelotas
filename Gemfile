@@ -14,6 +14,8 @@ gem 'grape'
 gem 'grape-jbuilder'
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'enumerize'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
