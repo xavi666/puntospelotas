@@ -14,7 +14,11 @@ gem 'grape'
 gem 'grape-jbuilder'
 gem 'rack-cors', :require => 'rack/cors'
 
+# Enumerize Attributes
 gem 'enumerize'
+
+# Background workers
+gem 'delayed_job_active_record'
 
 group :development, :test do
   gem 'byebug'
