@@ -7,6 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+Team.destroy_all
+Game.destroy_all
+Delayed::Job.where(queue: 'check_points').delete_all
+
 # TEAM
 # Group A (1 - 4)
 Team.create(name: 'Albania', short_name: "ALB", group: "A")
@@ -46,7 +50,9 @@ Team.create(name: 'Portugal', short_name: "POR", group: "F")
 
 # GAME 
 # Jornada 1
-Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("10/06/2016 21:00"), stage: "Jornada 1")
+#Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("10/06/2016 21:00"), stage: "Jornada 1")
+Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("31/05/2016 14:40"), stage: "Jornada 1")
+
 
 Game.create(local_team_id: 1, visitant_team_id: 4, game_date: DateTime.parse("11//062016 15:00"), stage: "Jornada 1")
 Game.create(local_team_id: 8, visitant_team_id: 7, game_date: DateTime.parse("11/06/2016 18:00"), stage: "Jornada 1")
