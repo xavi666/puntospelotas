@@ -51,7 +51,7 @@ Team.create(name: 'Portugal', short_name: "POR", group: "F")
 # GAME 
 # Jornada 1
 #Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("10/06/2016 21:00"), stage: "Jornada 1")
-Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("31/05/2016 13:53"), stage: "Jornada 1")
+Game.create(local_team_id: 2, visitant_team_id: 3, game_date: DateTime.parse("31/05/2016 13:58"), stage: "Jornada 1")
 
 
 Game.create(local_team_id: 1, visitant_team_id: 4, game_date: DateTime.parse("11//062016 15:00"), stage: "Jornada 1")
