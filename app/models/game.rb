@@ -35,12 +35,12 @@ class Game < ActiveRecord::Base
 
 
   def initial_job
-    Game.delay(run_at: self.game_date + 2.hours, queue: 'check_points').check_points(self) if self.game_date
+    Game.delay(run_at: self.game_date + 1.hours, queue: 'check_points').check_points(self) if self.game_date
   end
 
   def self.check_points game
-    puts DateTime.now.to_s+"-------> I AM GOING TO CHECK THE POINTS HERE!!!!"
-    Game.delay(run_at: DateTime.now + 2.minutes, queue: 'check_points').check_points(game) if game.game_date
+    UserMailer.welcome_email(User.first).deliver
+    Game.delay(run_at: DateTime.now + 1.minute, queue: 'check_points').check_points(game) if game.game_date
   end
 
   #    Delayed::Job.where(queue: 'check_points').delete_all
