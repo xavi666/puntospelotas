@@ -43,6 +43,4 @@ class Game < ActiveRecord::Base
     Game.delay(run_at: DateTime.now + 1.minute, queue: 'check_points').check_points(game) if game.game_date
   end
 
-  #    Delayed::Job.where(queue: 'check_points').delete_all
-  #    CurrencyConversion.delay(run_at: Date.today.end_of_day + 5.hours, queue: 'currency_updates').update_remote_currencies
 end
