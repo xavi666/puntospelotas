@@ -31,32 +31,65 @@ class Game < ActiveRecord::Base
   # !                Callbacks
   # !**************************************************
   after_create :initial_job
+  after_save :notification_delayed_job, :if => :comunio_points_changed?
 
   # !**************************************************
   # !                  Other
   # !**************************************************
 
+  def notification_delayed_job
+    if self.comunio_points
+      UserMailer.game_email(User.first, self).deliver
+    else
+      Game.delay(run_at: DateTime.now + 1.minute, queue: 'check_points').check_points(self) if self.game_date
+    end
+  end
 
   def initial_job
     Game.delay(run_at: self.game_date + 1.hours, queue: 'check_points').check_points(self) if self.game_date
   end
 
   def self.check_points game
-    #UserMailer.welcome_email(User.first).deliver
+    page = Nokogiri::HTML(open(game.comunio_url))
+    estadistica = {:local => [], :visitante => [] }
 
-    page = Nokogiri::HTML(open(game.url_comunio))
+    # MARCADOR
     marcador = page.css('.marcador')
     goles_local = marcador.search('span/text()')[0]
     goles_visitante = marcador.search('span/text()')[1]
 
-    puts "goles_local ==> "+goles_local.to_s
-    puts "goles_visitante ==> "+goles_visitante.to_s
-
     if goles_local != "-" and goles_visitante != "-"
-      tabla_local = page.css('div.group/table/tbody') 
-      puts tabla_local
+      
+      # LOCAL
+      tabla_local = page.css('div.wrapper > div.content > div.group > div.col > div.box > table')[0]
+      tabla_local.search('tr').collect do |row|
+        posicion = row.css('td.mini/span/text()').to_s
+        if ['PT', 'DF', 'MC', 'DL'].include? posicion
+          nombre = row.css('td.ancho/a/strong/text()').to_s
+          puntos = row.css('td.score/text()').to_s
+          estadistica[:local] << {position: posicion, nombre: nombre, puntos: puntos}
+        end
+      end
+
+      #VISITANTE
+      tabla_visitante = page.css('div.wrapper > div.content > div.group > div.col > div.box > table')[2]
+      tabla_visitante.search('tr').collect do |row|
+        posicion = row.css('td.mini/span/text()').to_s
+        if ['PT', 'DF', 'MC', 'DL'].include? posicion
+          nombre = row.css('td.ancho/a/strong/text()').to_s
+          puntos = row.css('td.score/text()').to_s
+          estadistica[:visitante] << {position: posicion, nombre: nombre, puntos: puntos}
+        end
+      end
+
+      if estadistica[:local].count > 0 and estadistica[:visitante].count > 0
+        game.goals_local_team = goles_local.to_s.to_i
+        game.goals_visitant_team = goles_visitante.to_s.to_i
+        game.comunio_points_value = estadistica
+        game.comunio_points = true
+        game.save!
+      end
     end
-    #Game.delay(run_at: DateTime.now + 1.minute, queue: 'check_points').check_points(game) if game.game_date
   end
 
 end

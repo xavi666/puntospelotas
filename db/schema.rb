@@ -41,8 +41,9 @@ ActiveRecord::Schema.define(version: 20160606153556) do
     t.string   "stage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "points",              default: false
-    t.string   "url_comunio"
+    t.string   "comunio_url"
+    t.boolean  "comunio_points",       default: false
+    t.json     "comunio_points_value"
   end
 
   create_table "players", force: :cascade do |t|

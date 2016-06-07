@@ -6,4 +6,11 @@ class UserMailer < ApplicationMailer
     @url  = 'http://example.com/login'
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
+
+  def game_email(user, game)
+    @user = user
+    @game = game
+    @url  = 'http://example.com/login'
+    mail(to: @user.email, subject: 'Puntos Pelotas - Notificación de Puntos')
+  end
 end
