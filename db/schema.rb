@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531134129) do
+ActiveRecord::Schema.define(version: 20160606153556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,9 @@ ActiveRecord::Schema.define(version: 20160531134129) do
     t.string   "stage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "points",              default: false
+    t.string   "comunio_url"
+    t.boolean  "comunio_points",       default: false
+    t.json     "comunio_points_value"
   end
 
   create_table "players", force: :cascade do |t|
