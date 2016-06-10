@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
      devise_parameter_sanitizer.for(:account_update) << :name
      devise_parameter_sanitizer.for(:account_update) << :push_comunio
+     devise_parameter_sanitizer.for(:account_update) << :ionic_push_token
   end
 
 
@@ -37,7 +38,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :push_comunio])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :push_comunio, :ionic_push_token])
   end
 
 end
