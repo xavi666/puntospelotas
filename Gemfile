@@ -8,11 +8,20 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 
 gem 'bower-rails'
-gem 'devise_token_auth', '0.1.32.beta8'
+gem "devise_token_auth", ">= 0.1.32.beta9"
 gem 'angular-rails-templates'
 gem 'grape'
 gem 'grape-jbuilder'
 gem 'rack-cors', :require => 'rack/cors'
+
+# Enumerize Attributes
+gem 'enumerize'
+
+# Background workers
+gem 'delayed_job_active_record'
+
+# Nokogiri
+gem 'nokogiri'
 
 group :development, :test do
   gem 'byebug'
