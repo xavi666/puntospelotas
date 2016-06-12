@@ -55,4 +55,9 @@ Rails.application.configure do
     password: 'aligual6',
     authentication: 'plain',
     enable_starttls_auto: true}
+
+  # Ionic Push
+  config.ionic_application_id = "ef8ae3d2"
+  config.ionic_api_key = "f3b22ac76cdbb31e0d7fe10a191884f92f9308ea4900568b"
+
 end

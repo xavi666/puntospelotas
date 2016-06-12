@@ -4,3 +4,24 @@
 <main role="main">
   <div ui-view></div>
 </main>
+
+<%
+  device_tokens = [
+    "DEV-28f9a459-ec5e-496d-9db2-f61e263eddea"
+  ]
+
+  service = IonicPush::PushService.new(device_tokens: device_tokens)
+  service.alert!("Is this you John Wayne? Is this me?")
+
+  service.notify do
+    {
+      "alert":"You've got updated messages!",
+      "android":{
+        "title":"Updated Messages",
+        "payload":{
+          "type":"configuration"
+        }
+      }
+    }
+  end
+%>

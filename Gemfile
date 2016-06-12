@@ -23,6 +23,9 @@ gem 'delayed_job_active_record'
 # Nokogiri
 gem 'nokogiri'
 
+# Ionic Push Notifications
+gem 'ionic_push', github: 'nwwatson/ionic_push', branch: 'master'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
