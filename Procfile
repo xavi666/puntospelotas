@@ -1,2 +1,2 @@
 web: bundle exec unicorn -p $PORT
-worker: rake jobs:work
+worker: bundle exec rake jobs:work
