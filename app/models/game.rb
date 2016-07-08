@@ -45,16 +45,11 @@ class Game < ActiveRecord::Base
 
   def initial_job
     UserMailer.game_email(User.first, self).deliver    
-    # Verifica al cap de dues hores d'acabar el partit
-    #Game.delay(run_at: self.game_date + 1.hours, queue: 'check_points').check_points(self) if self.game_date
     # Verifica al cap d'una hora de crear el Game
-    Game.delay(run_at: DateTime.now + 1.minutes, queue: 'check_points').check_points(self) if self.game_date
+    Game.delay(run_at: self.game_date + 1.hours, queue: 'check_points').check_points(self) if self.game_date
   end
 
   def self.check_points game
-
-    UserMailer.game_email(User.first, game).deliver    
-
     page = Nokogiri::HTML(open(game.comunio_url))
     estadistica = {:local => [], :visitante => [] }
 
@@ -96,7 +91,7 @@ class Game < ActiveRecord::Base
       end
     else
       # Verifica cada minut
-      Game.delay(run_at: DateTime.now + 20.seconds, queue: 'check_points').check_points(game) if game.game_date
+      Game.delay(run_at: DateTime.now + 1.minutes, queue: 'check_points').check_points(game) if game.game_date
     end
   end
 
