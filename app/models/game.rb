@@ -38,7 +38,7 @@ class Game < ActiveRecord::Base
   # !**************************************************
 
   def notification_delayed_job
-    unless self.comunio_points
+    if self.comunio_points
       UserMailer.game_email(User.first, self).deliver
     end
   end
