@@ -44,7 +44,6 @@ class Game < ActiveRecord::Base
   end
 
   def initial_job
-    UserMailer.game_email(User.first, self).deliver    
     # Verifica al cap d'una hora de crear el Game
     Game.delay(run_at: self.game_date + 1.hours, queue: 'check_points').check_points(self) if self.game_date
   end
